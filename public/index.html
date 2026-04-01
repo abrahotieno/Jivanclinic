@@ -41,6 +41,12 @@
 <body class="jivan-page">
     <a class="jivan-skip" href="#main">Skip to main content</a>
 
+    <!-- Floating Contact Button -->
+    <a href="tel:01168333444" style="position: fixed; bottom: 2rem; right: 2rem; background: #1a4d4a; padding: 0.75rem 1rem; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 100; display: flex; align-items: center; gap: 0.5rem; color: white; text-decoration: none; font-weight: 500;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="none"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        Call Us
+    </a>
+
     <header class="jivan-header" role="banner">
         <div class="jivan-header__inner">
             <a href="#" class="jivan-logo" aria-label="Jivan Wellness Clinic — home">
@@ -77,13 +83,13 @@
             <div class="jivan-hero__inner">
                 <div>
                     <p class="jivan-badge">Nairobi · East Africa</p>
-                    <h1 id="hero-heading">Wellness and neuro-therapy, elevated</h1>
+                    <h1 id="hero-heading">Reset Your Brain. Reclaim Your Life.</h1>
                     <p class="jivan-hero__lead">
-                        Jivan Wellness Clinic is a premium, science-backed center for personalized healing—combining clinical expertise, advanced neuro-technology, holistic modalities, and a discreet, luxury experience for individuals, families, and organizations.
+                        East Africa's first integrated neuro-wellness clinic — combining FDA-approved rTMS therapy with precision medicine for executives, families, and high-performers.
                     </p>
                     <div class="jivan-hero__actions">
-                        <a class="jivan-btn jivan-btn--primary" href="#waitlist">Request early access</a>
-                        <a class="jivan-btn jivan-btn--ghost" href="#naya">Explore programs</a>
+                        <a class="jivan-btn jivan-btn--primary" href="#waitlist">Join Waitlist →</a>
+                        <a class="jivan-btn jivan-btn--ghost" href="#naya">Learn More ↓</a>
                     </div>
                 </div>
                 <aside class="jivan-hero-card" id="opening" aria-labelledby="opening-card-title">
@@ -97,7 +103,28 @@
                         <li>Holistic healing modalities</li>
                         <li>Private, high-end client experience</li>
                     </ul>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="jivan-countdown" style="margin-top: 1.5rem; text-align: center;">
+                        <p style="font-size: 0.8rem; color: var(--jivan-gold); margin-bottom: 0.5rem;">Opening in</p>
+                        <div style="display: flex; justify-content: center; gap: 0.75rem; font-family: monospace; font-weight: bold;">
+                            <div><span id="days" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">DAYS</small></div>
+                            <div><span id="hours" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">HOURS</small></div>
+                            <div><span id="minutes" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">MINS</small></div>
+                            <div><span id="seconds" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">SECS</small></div>
+                        </div>
+                    </div>
                 </aside>
+            </div>
+        </section>
+
+        <!-- Trust Badges -->
+        <section class="jivan-section jivan-section--alt" style="padding: 1.5rem 1.25rem;">
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <span style="font-weight: 600; color: var(--jivan-primary);">✓ FDA-Approved Protocols</span>
+                <span style="font-weight: 600; color: var(--jivan-primary);">✓ Science-Backed</span>
+                <span style="font-weight: 600; color: var(--jivan-primary);">✓ Premium Private Care</span>
+                <span style="font-weight: 600; color: var(--jivan-primary);">✓ Evidence-Based Results</span>
             </div>
         </section>
 
@@ -125,6 +152,28 @@
                 <div class="jivan-pillar">
                     <strong>Proven models</strong>
                     <span>Trusted partner credibility</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="jivan-section">
+            <div class="jivan-section__head">
+                <p class="jivan-eyebrow">Simple Process</p>
+                <h2>Your Journey to Peak Wellness</h2>
+            </div>
+            <div class="jivan-pillars">
+                <div class="jivan-pillar">
+                    <strong>1. Consultation</strong>
+                    <span>Comprehensive assessment and goal setting</span>
+                </div>
+                <div class="jivan-pillar">
+                    <strong>2. Personalized Plan</strong>
+                    <span>Custom protocol combining rTMS + precision wellness</span>
+                </div>
+                <div class="jivan-pillar">
+                    <strong>3. Transform & Thrive</strong>
+                    <span>Ongoing support and measurable results</span>
                 </div>
             </div>
         </section>
@@ -308,11 +357,53 @@
             <div>
                 <div class="jivan-footer__brand">Jivan Wellness Clinic</div>
                 <small>General Mathenge Gardens, Nairobi · East Africa · Opening June 2026</small>
+                <div style="margin-top: 0.75rem;">
+                    <a href="mailto:talk2us@jivanwellness.life" style="color: rgba(255,255,255,0.75); text-decoration: none;">📧 talk2us@jivanwellness.life</a>
+                    <span style="margin: 0 0.5rem;">|</span>
+                    <a href="tel:01168333444" style="color: rgba(255,255,255,0.75); text-decoration: none;">📞 011 683 33444</a>
+                </div>
             </div>
             <p>&copy; <span id="jivanYear"></span> Jivan Wellness Clinic. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="assets/jivan-wellness.js" defer></script>
+    <script>
+        document.getElementById('jivanYear').textContent = new Date().getFullYear();
+        
+        // Countdown Timer
+        function updateCountdown() {
+            const target = new Date("June 1, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff > 0) {
+                document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerText = Math.floor((diff % (86400000)) / 3600000);
+                document.getElementById("minutes").innerText = Math.floor((diff % 3600000) / 60000);
+                document.getElementById("seconds").innerText = Math.floor((diff % 60000) / 1000);
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Mobile menu
+        const btn = document.getElementById('jivanMenuBtn');
+        const nav = document.getElementById('jivanMobileNav');
+        if (btn && nav) {
+            btn.addEventListener('click', () => {
+                const open = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', String(!open));
+                nav.hidden = open;
+                nav.classList.toggle('is-open', !open);
+            });
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    btn.setAttribute('aria-expanded', 'false');
+                    nav.hidden = true;
+                    nav.classList.remove('is-open');
+                });
+            });
+        }
+    </script>
 </body>
 </html>
