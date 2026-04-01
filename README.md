@@ -49,12 +49,14 @@ This is the quickest check for layout and copy. It does not match production exa
 
 ## Deployment
 
-| Event | What runs |
-|-------|-----------|
-| **Pull request** (same-repo branches only) | Preview channel + PR comment with preview URL |
-| **Push to `main`** | Live site (`channelId: live`) |
+Workflow: `.github/workflows/firebase-hosting.yml`. It runs on **push** to `sandbox` or `main` (including when a PR is merged into those branches).
 
-Workflow: `.github/workflows/firebase-hosting.yml`.
+| Branch updated | Firebase target |
+|----------------|-----------------|
+| **`sandbox`** | Preview channel `sandbox` (stable staging URL in the Firebase Hosting console) |
+| **`main`** | Live site (`channelId: live`) |
+
+Typical flow: open a PR **into `sandbox`** → merge when ready for staging preview → open a PR **from `sandbox` into `main`** (or your release process) → merge to ship live.
 
 ### GitHub secret
 
@@ -62,7 +64,7 @@ The workflow expects a Firebase service account JSON in:
 
 `FIREBASE_SERVICE_ACCOUNT_JIVAN_WELLNESS`
 
-Configure this in the repository **Settings → Secrets and variables → Actions**. PR previews from forks are skipped by design (`preview` job `if` condition) because secrets are not available to untrusted forks.
+Configure this in the repository **Settings → Secrets and variables → Actions**.
 
 ### Manual deploy
 

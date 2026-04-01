@@ -1,22 +1,21 @@
-# Firebase Hosting: PR previews + production on main
+# Firebase Hosting: sandbox preview + production on main
+# Merging a PR into `sandbox` or `main` triggers a push — that runs the matching deploy.
 # https://github.com/firebase/firebase-tools
 
 name: Firebase Hosting
 
 on:
-  pull_request:
   push:
     branches:
+      - sandbox
       - main
 
 permissions:
-  checks: write
   contents: read
-  pull-requests: write
 
 jobs:
-  preview:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+  deploy_preview:
+    if: github.ref == 'refs/heads/sandbox'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,10 +23,11 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JIVAN_WELLNESS }}
+          channelId: sandbox
           projectId: jivan-wellness
 
   deploy_live:
-    if: github.event_name == 'push'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
