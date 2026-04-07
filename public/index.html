@@ -22,11 +22,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/jivan-wellness.css">
 
-    <!-- Paste the full "HTTP POST URL" from Power Automate → When an HTTP request is received (include query string). -->
-    <script>
-      window.JIVAN_POWER_AUTOMATE_URL = '';
-    </script>
-
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -323,42 +318,21 @@
             <div class="jivan-cta" id="waitlist">
                 <h2>Be first in line for June 2026</h2>
                 <p>Personalized consultations, membership packages, corporate retainers, and referral programs will be available closer to opening. Leave your details and we'll share updates on tours, founding memberships, and executive briefings.</p>
-                <form class="jivan-form" id="waitlistForm" method="POST" enctype="application/x-www-form-urlencoded" target="jivan-pa-iframe" action="#">
-                    <p class="jivan-form__field jivan-form__hp" aria-hidden="true">
-                        <label for="waitlist-company">Company</label>
-                        <input type="text" id="waitlist-company" name="company" tabindex="-1" autocomplete="off">
+                <div class="jivan-embed">
+                    <iframe
+                        class="jivan-embed__frame"
+                        id="waitlistFormEmbed"
+                        title="Jivan waitlist — Microsoft form"
+                        src="https://jivanwellness.sharepoint.com/:l:/s/JivanWellness/JAAWGXnAjen0QbGOc6woPm7yAXmpwZTHDiOKlNIYl9Y-O2g?nav=N2I4MjZiOGCtOTI2My00N2U3LTliMDYtYzIwZDYxNzdlM2Y5"
+                        loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="clipboard-write; fullscreen"></iframe>
+                    <p class="jivan-embed__fallback">
+                        <a class="jivan-embed__link" href="https://jivanwellness.sharepoint.com/:l:/s/JivanWellness/JAAWGXnAjen0QbGOc6woPm7yAXmpwZTHDiOKlNIYl9Y-O2g?nav=N2I4MjZiOGCtOTI2My00N2U3LTliMDYtYzIwZDYxNzdlM2Y5" target="_blank" rel="noopener noreferrer">Open the form in a new tab</a>
+                        <span class="jivan-embed__hint"> if it does not appear above (some browsers block embedded SharePoint).</span>
                     </p>
-                    <div class="jivan-form__row">
-                        <div class="jivan-form__field">
-                            <label for="name">Full name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name" autocomplete="name">
-                        </div>
-                        <div class="jivan-form__field">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="email">
-                        </div>
-                    </div>
-                    <div class="jivan-form__field">
-                        <label for="interest">I'm interested in</label>
-                        <select id="interest" name="interest" required>
-                            <option value="">Select an option</option>
-                            <option value="individual">Individual wellness programs</option>
-                            <option value="corporate">Corporate / Executive packages</option>
-                            <option value="rTMS">rTMS / Neurofeedback treatment</option>
-                            <option value="family">Family membership</option>
-                            <option value="medical-tourism">Medical tourism</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="jivan-form__field">
-                        <label for="message">Message (optional)</label>
-                        <textarea id="message" name="message" rows="3" placeholder="Tell us about your goals or questions..."></textarea>
-                    </div>
-                    <button type="submit" class="jivan-btn jivan-btn--primary jivan-btn--large">Join the waitlist</button>
-                    <p class="jivan-form__feedback" id="waitlistFeedback" role="status" aria-live="polite"></p>
-                    <p class="jivan-form__note">We respect your privacy. Your information will never be shared.</p>
-                </form>
-                <iframe class="jivan-form__pa-frame" name="jivan-pa-iframe" id="jivanPaIframe" title="Waitlist submission" tabindex="-1" aria-hidden="true"></iframe>
+                    <p class="jivan-form__note jivan-embed__privacy">We respect your privacy. Your information will never be shared.</p>
+                </div>
             </div>
         </section>
     </main>

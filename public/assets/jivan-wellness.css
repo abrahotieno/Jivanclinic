@@ -179,108 +179,10 @@
   line-height: 1.6;
 }
 
-/* Form styles */
-.jivan-form {
-  max-width: 560px;
-  margin: 1.5rem auto 0;
-  text-align: left;
-}
-
-.jivan-form__row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem 1.25rem;
-  margin-bottom: 1rem;
-}
-
-/* Prevent grid columns from overflowing each other (inputs have a large min-content width). */
-.jivan-form__row > .jivan-form__field {
-  min-width: 0;
-}
-
-@media (max-width: 480px) {
-  .jivan-form__row {
-    grid-template-columns: 1fr;
-  }
-}
-
-.jivan-form__field {
-  margin-bottom: 1rem;
-}
-
-.jivan-form__field label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--jivan-white);
-  margin-bottom: 0.4rem;
-  opacity: 0.9;
-}
-
-.jivan-form__field input,
-.jivan-form__field select,
-.jivan-form__field textarea {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--jivan-white);
-  font-size: 0.95rem;
-  font-family: inherit;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.jivan-form__field input::placeholder,
-.jivan-form__field textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.jivan-form__field input:focus,
-.jivan-form__field select:focus,
-.jivan-form__field textarea:focus {
-  outline: none;
-  border-color: var(--jivan-gold);
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.jivan-form__field select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  padding-right: 2.5rem;
-}
-
-.jivan-form__field select option {
-  background: var(--jivan-deep);
-  color: var(--jivan-white);
-}
-
-.jivan-form__field textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
 .jivan-btn--large {
   width: 100%;
   padding: 1rem 1.5rem;
   font-size: 1rem;
-}
-
-.jivan-form__feedback {
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 0.75rem;
-  min-height: 1.35rem;
-  color: var(--jivan-gold-soft);
-}
-
-.jivan-form__feedback:empty {
-  display: none;
 }
 
 .jivan-form__note {
@@ -291,30 +193,49 @@
   color: var(--jivan-white);
 }
 
-/* Honeypot — hidden from users; bots often fill it. */
-.jivan-form__hp {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+/* SharePoint / Microsoft List form embed (waitlist) */
+.jivan-embed {
+  max-width: 720px;
+  margin: 1.5rem auto 0;
+  text-align: center;
 }
 
-/* Power Automate receives POST here; hidden so the page does not navigate away. */
-.jivan-form__pa-frame {
+.jivan-embed__frame {
   display: block;
-  width: 0;
-  height: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  visibility: hidden;
-  position: absolute;
-  left: -9999px;
+  width: 100%;
+  min-height: 640px;
+  height: 72vh;
+  max-height: 900px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.jivan-embed__fallback {
+  margin: 0.85rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+}
+
+.jivan-embed__link {
+  color: var(--jivan-gold-soft);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.jivan-embed__link:hover {
+  color: var(--jivan-white);
+}
+
+.jivan-embed__hint {
+  opacity: 0.85;
+}
+
+.jivan-embed__privacy {
+  margin-top: 1.25rem;
 }
 
 /* Social links */
