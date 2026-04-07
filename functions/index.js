@@ -1,10 +1,47 @@
+/**
+ * Waitlist HTTP handler.
+ *
+ * Microsoft List (Graph) + Firestore
+ * ---------------------------------
+ * Set secret:  firebase functions:secrets:set MS_GRAPH_CLIENT_SECRET
+ * Set params (Console → Functions → your function → Environment / params, or .env for emulator):
+ *   MS_GRAPH_TENANT_ID       — Entra tenant ID
+ *   MS_GRAPH_CLIENT_ID       — App registration (application) client ID
+ *   MS_GRAPH_SITE_ID         — e.g. yourtenant.sharepoint.com:/sites/SiteName
+ *   MS_GRAPH_LIST_ID         — List GUID (SharePoint / Microsoft Lists)
+ *
+ * WAITLIST_PRIMARY           — auto | graph | firestore (default auto → graph if MS params + secret set)
+ * WAITLIST_MIRROR_TO_FIRESTORE — true | false (default false). If true, also writes Firestore when Graph succeeds.
+ *
+ * Entra app: application permission Sites.Selected or the minimum needed to write list items on that site;
+ * grant admin consent. Prefer Sites.Selected + POST /sites/{id}/permissions for least privilege.
+ */
+
 const {onRequest} = require("firebase-functions/v2/https");
+const {defineSecret, defineString} = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
+const {createWaitlistListItem} = require("./microsoftGraph");
 
 admin.initializeApp();
 
 const REGION = "europe-west1";
+
+const msClientSecret = defineSecret("MS_GRAPH_CLIENT_SECRET");
+
+const msTenantId = defineString("MS_GRAPH_TENANT_ID", {default: ""});
+const msClientId = defineString("MS_GRAPH_CLIENT_ID", {default: ""});
+const msSiteId = defineString("MS_GRAPH_SITE_ID", {default: ""});
+const msListId = defineString("MS_GRAPH_LIST_ID", {default: ""});
+
+const waitlistPrimary = defineString("WAITLIST_PRIMARY", {
+  default: "auto",
+  description: "auto | graph | firestore",
+});
+const waitlistMirrorFirestore = defineString("WAITLIST_MIRROR_TO_FIRESTORE", {
+  default: "false",
+  description: "true = also write Firestore when Microsoft Graph succeeds",
+});
 
 const ALLOWED_INTEREST = new Set([
   "individual",
@@ -49,11 +86,34 @@ function normalizeBody(req) {
   return null;
 }
 
+function microsoftConfigured(tenant, clientId, siteId, listId, clientSecret) {
+  return Boolean(
+      tenant &&
+      clientId &&
+      siteId &&
+      listId &&
+      clientSecret &&
+      clientSecret.trim().length > 0,
+  );
+}
+
+function resolvePrimary(mode, msReady) {
+  const m = (mode || "auto").toLowerCase();
+  if (m === "graph") {
+    return "graph";
+  }
+  if (m === "firestore") {
+    return "firestore";
+  }
+  return msReady ? "graph" : "firestore";
+}
+
 exports.submitWaitlist = onRequest(
     {
       region: REGION,
       cors: false,
       maxInstances: 10,
+      secrets: [msClientSecret],
     },
     async (req, res) => {
       if (req.method === "OPTIONS") {
@@ -108,7 +168,19 @@ exports.submitWaitlist = onRequest(
         return;
       }
 
-      try {
+      const tenant = msTenantId.value().trim();
+      const clientId = msClientId.value().trim();
+      const siteId = msSiteId.value().trim();
+      const listId = msListId.value().trim();
+      const clientSecret = msClientSecret.value();
+      const msReady = microsoftConfigured(tenant, clientId, siteId, listId, clientSecret);
+      const primary = resolvePrimary(waitlistPrimary.value(), msReady);
+      const mirrorFirestore = waitlistMirrorFirestore.value().toLowerCase() === "true";
+
+      const graphConfig = {tenantId: tenant, clientId, clientSecret, siteId, listId};
+      const payload = {name, email, interest, message};
+
+      async function saveFirestore(extra = {}) {
         await admin.firestore().collection("waitlistSubmissions").add({
           name,
           email,
@@ -116,9 +188,61 @@ exports.submitWaitlist = onRequest(
           message: message || null,
           createdAt: admin.firestore.FieldValue.serverTimestamp(),
           source: "website",
+          ...extra,
         });
-      } catch (err) {
-        logger.error("waitlist write failed", err);
+      }
+
+      let graphOk = false;
+      let firestoreOk = false;
+
+      async function tryMicrosoft() {
+        try {
+          await createWaitlistListItem(graphConfig, payload);
+          graphOk = true;
+        } catch (err) {
+          logger.warn("Microsoft List write failed", err.message || err);
+        }
+      }
+
+      async function tryFirestore(extra) {
+        try {
+          await saveFirestore(extra);
+          firestoreOk = true;
+        } catch (err) {
+          logger.error("Firestore write failed", err);
+        }
+      }
+
+      if (primary === "graph") {
+        if (msReady) {
+          await tryMicrosoft();
+          if (graphOk) {
+            if (mirrorFirestore) {
+              await tryFirestore({mirroredFrom: "microsoft_graph"});
+              if (!firestoreOk) {
+                logger.warn("Firestore mirror failed after successful Graph write");
+              }
+            }
+          } else {
+            await tryFirestore({
+              backupReason: "microsoft_graph_failed",
+              backupDetail: "See function logs for Graph error",
+            });
+          }
+        } else {
+          await tryFirestore({storageNote: "microsoft_graph_not_configured"});
+        }
+      } else {
+        await tryFirestore({});
+        if (!firestoreOk && msReady) {
+          await tryMicrosoft();
+          if (!graphOk) {
+            logger.error("Both Firestore and Microsoft Graph failed");
+          }
+        }
+      }
+
+      if (!graphOk && !firestoreOk) {
         res.status(500).json({error: "Could not save submission"});
         return;
       }
