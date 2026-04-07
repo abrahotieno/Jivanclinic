@@ -1,0 +1,8 @@
+{
+  "name": "Jivan Wellness Clinic",
+  "short_name": "Jivan",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#1a4d4a",
+  "theme_color": "#1a4d4a"
+}

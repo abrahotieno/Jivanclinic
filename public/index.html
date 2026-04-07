@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1a4d4a">
     <meta name="description" content="Jivan Wellness Clinic — premium science-backed wellness and neuro-therapy in Nairobi. Opening June 2026.">
     <meta name="keywords" content="Jivan Wellness, Nairobi wellness clinic, Naya, Precision Wellness, rTMS, executive wellness, East Africa">
 
@@ -15,6 +14,8 @@
 
     <link rel="icon" type="image/jpeg" href="assets/final%20logo%20jivan.jpg.jpeg">
     <link rel="shortcut icon" type="image/jpeg" href="assets/final%20logo%20jivan.jpg.jpeg">
+    <link rel="apple-touch-icon" href="assets/final%20logo%20jivan.jpg.jpeg">
+    <link rel="manifest" href="assets/site.webmanifest">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +43,7 @@
     <a class="jivan-skip" href="#main">Skip to main content</a>
 
     <!-- Floating Contact Button -->
-    <a href="tel:01168333444" style="position: fixed; bottom: 2rem; right: 2rem; background: #1a4d4a; padding: 0.75rem 1rem; border-radius: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 100; display: flex; align-items: center; gap: 0.5rem; color: white; text-decoration: none; font-weight: 500;">
+    <a class="jivan-float-call" href="tel:01168333444">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="none"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.28-.28.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
         Call Us
     </a>
@@ -105,13 +106,13 @@
                     </ul>
                     
                     <!-- Countdown Timer -->
-                    <div class="jivan-countdown" style="margin-top: 1.5rem; text-align: center;">
-                        <p style="font-size: 0.8rem; color: var(--jivan-gold); margin-bottom: 0.5rem;">Opening in</p>
-                        <div style="display: flex; justify-content: center; gap: 0.75rem; font-family: monospace; font-weight: bold;">
-                            <div><span id="days" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">DAYS</small></div>
-                            <div><span id="hours" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">HOURS</small></div>
-                            <div><span id="minutes" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">MINS</small></div>
-                            <div><span id="seconds" style="font-size: 1.25rem;">00</span><br><small style="font-size: 0.7rem;">SECS</small></div>
+                    <div class="jivan-countdown">
+                        <p class="jivan-countdown__lead">Opening in</p>
+                        <div class="jivan-countdown__row">
+                            <div class="jivan-countdown__cell"><span class="jivan-countdown__value" id="days">00</span><br><small class="jivan-countdown__unit">DAYS</small></div>
+                            <div class="jivan-countdown__cell"><span class="jivan-countdown__value" id="hours">00</span><br><small class="jivan-countdown__unit">HOURS</small></div>
+                            <div class="jivan-countdown__cell"><span class="jivan-countdown__value" id="minutes">00</span><br><small class="jivan-countdown__unit">MINS</small></div>
+                            <div class="jivan-countdown__cell"><span class="jivan-countdown__value" id="seconds">00</span><br><small class="jivan-countdown__unit">SECS</small></div>
                         </div>
                     </div>
                 </aside>
@@ -119,12 +120,12 @@
         </section>
 
         <!-- Trust Badges -->
-        <section class="jivan-section jivan-section--alt" style="padding: 1.5rem 1.25rem;">
-            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <span style="font-weight: 600; color: var(--jivan-primary);">✓ FDA-Approved Protocols</span>
-                <span style="font-weight: 600; color: var(--jivan-primary);">✓ Science-Backed</span>
-                <span style="font-weight: 600; color: var(--jivan-primary);">✓ Premium Private Care</span>
-                <span style="font-weight: 600; color: var(--jivan-primary);">✓ Evidence-Based Results</span>
+        <section class="jivan-section jivan-section--alt">
+            <div class="jivan-trust-badges">
+                <span class="jivan-badge jivan-badge--fda">FDA-Approved Protocols</span>
+                <span class="jivan-badge jivan-badge--science">Science-Backed</span>
+                <span class="jivan-badge jivan-badge--premium">Premium Private Care</span>
+                <span class="jivan-badge jivan-badge--evidence">Evidence-Based Results</span>
             </div>
         </section>
 
@@ -231,7 +232,7 @@
             <div class="jivan-section__head">
                 <div class="jivan-division-header">
                     <a href="https://www.pwz.health" target="_blank" rel="noopener noreferrer" class="jivan-division-logo-link" aria-label="Visit Precision Wellness website (opens in new tab)">
-                        <img src="assets/Precision-Wellness-Logo-B-2-768x541.png" alt="Precision Wellness — click to visit website" class="jivan-division-logo" style="background: #1a4d4a; padding: 0.75rem; border-radius: 12px;" loading="lazy">
+                        <img src="assets/Precision-Wellness-Logo-B-2-768x541.png" alt="Precision Wellness — click to visit website" class="jivan-division-logo jivan-division-logo--precision" loading="lazy">
                     </a>
                     <p class="jivan-eyebrow">Precision Wellness</p>
                 </div>
@@ -329,7 +330,6 @@
                         frameborder="0"
                         marginwidth="0"
                         marginheight="0"
-                        style="border: none; max-width: 100%; max-height: 100vh"
                         allowfullscreen
                         webkitallowfullscreen
                         mozallowfullscreen
@@ -351,10 +351,10 @@
             <div>
                 <div class="jivan-footer__brand">Jivan Wellness Clinic</div>
                 <small>General Mathenge Gardens, Nairobi · East Africa · Opening June 2026</small>
-                <div style="margin-top: 0.75rem;">
-                    <a href="mailto:talk2us@jivanwellness.life" style="color: rgba(255,255,255,0.75); text-decoration: none;">📧 talk2us@jivanwellness.life</a>
-                    <span style="margin: 0 0.5rem;">|</span>
-                    <a href="tel:01168333444" style="color: rgba(255,255,255,0.75); text-decoration: none;">📞+254 119 111 777 </a>
+                <div class="jivan-footer__contact">
+                    <a href="mailto:talk2us@jivanwellness.life">📧 talk2us@jivanwellness.life</a>
+                    <span class="jivan-footer__contact-sep" aria-hidden="true">|</span>
+                    <a href="tel:01168333444">📞+254 119 111 777 </a>
                 </div>
             </div>
             <p>&copy; <span id="jivanYear"></span> Jivan Wellness Clinic. All rights reserved.</p>
