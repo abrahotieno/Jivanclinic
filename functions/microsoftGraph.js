@@ -3,6 +3,9 @@ const logger = require("firebase-functions/logger");
 let cachedToken = null;
 let cachedExpiryMs = 0;
 
+/** @type {Map<string, string>} */
+const listIdBySiteAndName = new Map();
+
 /**
  * Client credentials token for Microsoft Graph (app-only).
  */
@@ -69,6 +72,40 @@ async function createListItem({tenantId, clientId, clientSecret, siteId, listId,
 }
 
 /**
+ * Resolve list GUID from its display name (e.g. "Website Interest Form").
+ */
+async function resolveListIdByDisplayName({tenantId, clientId, clientSecret, siteId, displayName}) {
+  const key = `${siteId}::${displayName.trim().toLowerCase()}`;
+  if (listIdBySiteAndName.has(key)) {
+    return listIdBySiteAndName.get(key);
+  }
+
+  const token = await getGraphAccessToken(tenantId, clientId, clientSecret);
+  let url = `https://graph.microsoft.com/v1.0/sites/${encodeURIComponent(siteId)}/lists?$top=200&$select=id,displayName`;
+  const target = displayName.trim().toLowerCase();
+
+  while (url) {
+    const res = await fetch(url, {headers: {Authorization: `Bearer ${token}`}});
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      logger.error("Microsoft Graph list enumeration failed", {status: res.status, data});
+      throw new Error(
+          (data.error && data.error.message) || "Failed to enumerate lists",
+      );
+    }
+    for (const list of data.value || []) {
+      if (list.displayName && list.displayName.toLowerCase() === target) {
+        listIdBySiteAndName.set(key, list.id);
+        return list.id;
+      }
+    }
+    url = data["@odata.nextLink"] || null;
+  }
+
+  throw new Error(`List not found with display name: ${displayName}`);
+}
+
+/**
  * Try full field set, then Title-only line if Graph returns 4xx (wrong column names).
  */
 async function createWaitlistListItem(config, {name, email, interest, message}) {
@@ -97,4 +134,5 @@ module.exports = {
   getGraphAccessToken,
   createListItem,
   createWaitlistListItem,
+  resolveListIdByDisplayName,
 };

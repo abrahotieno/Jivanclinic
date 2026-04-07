@@ -7,8 +7,10 @@
  * Set params (Console → Functions → your function → Environment / params, or .env for emulator):
  *   MS_GRAPH_TENANT_ID       — Entra tenant ID
  *   MS_GRAPH_CLIENT_ID       — App registration (application) client ID
- *   MS_GRAPH_SITE_ID         — e.g. yourtenant.sharepoint.com:/sites/SiteName
- *   MS_GRAPH_LIST_ID         — List GUID (SharePoint / Microsoft Lists)
+ *   MS_GRAPH_SITE_ID         — Graph site id, NOT the https URL, e.g.
+ *                              jivanwellness.sharepoint.com:/sites/JivanWellness
+ *   MS_GRAPH_LIST_ID         — Optional. List GUID if you have it.
+ *   MS_GRAPH_LIST_DISPLAY_NAME — Optional if LIST_ID set. E.g. Website Interest Form
  *
  * WAITLIST_PRIMARY           — auto | graph | firestore (default auto → graph if MS params + secret set)
  * WAITLIST_MIRROR_TO_FIRESTORE — true | false (default false). If true, also writes Firestore when Graph succeeds.
@@ -21,7 +23,7 @@ const {onRequest} = require("firebase-functions/v2/https");
 const {defineSecret, defineString} = require("firebase-functions/params");
 const logger = require("firebase-functions/logger");
 const admin = require("firebase-admin");
-const {createWaitlistListItem} = require("./microsoftGraph");
+const {createWaitlistListItem, resolveListIdByDisplayName} = require("./microsoftGraph");
 
 admin.initializeApp();
 
@@ -33,6 +35,7 @@ const msTenantId = defineString("MS_GRAPH_TENANT_ID", {default: ""});
 const msClientId = defineString("MS_GRAPH_CLIENT_ID", {default: ""});
 const msSiteId = defineString("MS_GRAPH_SITE_ID", {default: ""});
 const msListId = defineString("MS_GRAPH_LIST_ID", {default: ""});
+const msListDisplayName = defineString("MS_GRAPH_LIST_DISPLAY_NAME", {default: ""});
 
 const waitlistPrimary = defineString("WAITLIST_PRIMARY", {
   default: "auto",
@@ -171,13 +174,42 @@ exports.submitWaitlist = onRequest(
       const tenant = msTenantId.value().trim();
       const clientId = msClientId.value().trim();
       const siteId = msSiteId.value().trim();
-      const listId = msListId.value().trim();
+      const listIdParam = msListId.value().trim();
+      const listDisplayName = msListDisplayName.value().trim();
       const clientSecret = msClientSecret.value();
-      const msReady = microsoftConfigured(tenant, clientId, siteId, listId, clientSecret);
+
+      let listIdResolved = listIdParam;
+      if (!listIdResolved && listDisplayName) {
+        try {
+          listIdResolved = await resolveListIdByDisplayName({
+            tenantId: tenant,
+            clientId,
+            clientSecret,
+            siteId,
+            displayName: listDisplayName,
+          });
+        } catch (err) {
+          logger.error("MS_GRAPH_LIST_DISPLAY_NAME resolve failed", err.message || err);
+        }
+      }
+
+      const msReady = microsoftConfigured(
+          tenant,
+          clientId,
+          siteId,
+          listIdResolved,
+          clientSecret,
+      );
       const primary = resolvePrimary(waitlistPrimary.value(), msReady);
       const mirrorFirestore = waitlistMirrorFirestore.value().toLowerCase() === "true";
 
-      const graphConfig = {tenantId: tenant, clientId, clientSecret, siteId, listId};
+      const graphConfig = {
+        tenantId: tenant,
+        clientId,
+        clientSecret,
+        siteId,
+        listId: listIdResolved,
+      };
       const payload = {name, email, interest, message};
 
       async function saveFirestore(extra = {}) {
