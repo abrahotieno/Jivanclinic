@@ -304,6 +304,19 @@
   border: 0;
 }
 
+/* Power Automate receives POST here; hidden so the page does not navigate away. */
+.jivan-form__pa-frame {
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+}
+
 /* Social links */
 .jivan-social {
   display: flex;

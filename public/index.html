@@ -22,6 +22,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/jivan-wellness.css">
 
+    <!-- Paste the full "HTTP POST URL" from Power Automate → When an HTTP request is received (include query string). -->
+    <script>
+      window.JIVAN_POWER_AUTOMATE_URL = '';
+    </script>
+
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -318,7 +323,7 @@
             <div class="jivan-cta" id="waitlist">
                 <h2>Be first in line for June 2026</h2>
                 <p>Personalized consultations, membership packages, corporate retainers, and referral programs will be available closer to opening. Leave your details and we'll share updates on tours, founding memberships, and executive briefings.</p>
-                <form class="jivan-form" id="waitlistForm" action="/api/waitlist" method="POST" novalidate>
+                <form class="jivan-form" id="waitlistForm" method="POST" enctype="application/x-www-form-urlencoded" target="jivan-pa-iframe" action="#">
                     <p class="jivan-form__field jivan-form__hp" aria-hidden="true">
                         <label for="waitlist-company">Company</label>
                         <input type="text" id="waitlist-company" name="company" tabindex="-1" autocomplete="off">
@@ -353,6 +358,7 @@
                     <p class="jivan-form__feedback" id="waitlistFeedback" role="status" aria-live="polite"></p>
                     <p class="jivan-form__note">We respect your privacy. Your information will never be shared.</p>
                 </form>
+                <iframe class="jivan-form__pa-frame" name="jivan-pa-iframe" id="jivanPaIframe" title="Waitlist submission" tabindex="-1" aria-hidden="true"></iframe>
             </div>
         </section>
     </main>
