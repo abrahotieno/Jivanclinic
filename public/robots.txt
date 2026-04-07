@@ -1,0 +1,5 @@
+# https://jivanwellness.life
+User-agent: *
+Allow: /
+
+Sitemap: https://jivanwellness.life/sitemap.xml
