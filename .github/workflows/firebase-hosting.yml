@@ -1,5 +1,5 @@
 # Firebase Hosting: sandbox preview + production on main
-# Merging a PR into `sandbox` or `main` triggers a push — that runs the matching deploy.
+# Merging a PR into `sandbox` or `main` triggers a push — runs the matching deploy.
 # https://github.com/firebase/firebase-tools
 
 name: Firebase Hosting
@@ -19,6 +19,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - name: Write Firebase service account (for CLI)
+        run: printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "${RUNNER_TEMP}/firebase-sa.json"
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JIVAN_WELLNESS }}
+        shell: bash
+      - name: Install Cloud Functions dependencies
+        working-directory: functions
+        run: npm ci
+      - name: Deploy Cloud Functions and Firestore rules
+        run: npx firebase-tools@latest deploy --only functions,firestore --project jivan-wellness --non-interactive
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
@@ -31,6 +48,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - name: Write Firebase service account (for CLI)
+        run: printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "${RUNNER_TEMP}/firebase-sa.json"
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JIVAN_WELLNESS }}
+        shell: bash
+      - name: Install Cloud Functions dependencies
+        working-directory: functions
+        run: npm ci
+      - name: Deploy Cloud Functions and Firestore rules
+        run: npx firebase-tools@latest deploy --only functions,firestore --project jivan-wellness --non-interactive
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-sa.json
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

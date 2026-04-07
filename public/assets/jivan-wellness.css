@@ -189,8 +189,13 @@
 .jivan-form__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 1rem 1.25rem;
   margin-bottom: 1rem;
+}
+
+/* Prevent grid columns from overflowing each other (inputs have a large min-content width). */
+.jivan-form__row > .jivan-form__field {
+  min-width: 0;
 }
 
 @media (max-width: 480px) {
@@ -215,7 +220,9 @@
 .jivan-form__field input,
 .jivan-form__field select,
 .jivan-form__field textarea {
+  box-sizing: border-box;
   width: 100%;
+  max-width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
@@ -264,12 +271,37 @@
   font-size: 1rem;
 }
 
+.jivan-form__feedback {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  min-height: 1.35rem;
+  color: var(--jivan-gold-soft);
+}
+
+.jivan-form__feedback:empty {
+  display: none;
+}
+
 .jivan-form__note {
   text-align: center;
   font-size: 0.8rem;
   opacity: 0.7;
   margin-top: 1rem;
   color: var(--jivan-white);
+}
+
+/* Honeypot — hidden from users; bots often fill it. */
+.jivan-form__hp {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Social links */

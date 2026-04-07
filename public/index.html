@@ -318,15 +318,19 @@
             <div class="jivan-cta" id="waitlist">
                 <h2>Be first in line for June 2026</h2>
                 <p>Personalized consultations, membership packages, corporate retainers, and referral programs will be available closer to opening. Leave your details and we'll share updates on tours, founding memberships, and executive briefings.</p>
-                <form class="jivan-form" id="waitlistForm" action="https://formspree.io/f/xaqloqdp" method="POST">
+                <form class="jivan-form" id="waitlistForm" action="/api/waitlist" method="POST" novalidate>
+                    <p class="jivan-form__field jivan-form__hp" aria-hidden="true">
+                        <label for="waitlist-company">Company</label>
+                        <input type="text" id="waitlist-company" name="company" tabindex="-1" autocomplete="off">
+                    </p>
                     <div class="jivan-form__row">
                         <div class="jivan-form__field">
                             <label for="name">Full name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name">
+                            <input type="text" id="name" name="name" required placeholder="Your name" autocomplete="name">
                         </div>
                         <div class="jivan-form__field">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                            <input type="email" id="email" name="email" required placeholder="your@email.com" autocomplete="email">
                         </div>
                     </div>
                     <div class="jivan-form__field">
@@ -346,6 +350,7 @@
                         <textarea id="message" name="message" rows="3" placeholder="Tell us about your goals or questions..."></textarea>
                     </div>
                     <button type="submit" class="jivan-btn jivan-btn--primary jivan-btn--large">Join the waitlist</button>
+                    <p class="jivan-form__feedback" id="waitlistFeedback" role="status" aria-live="polite"></p>
                     <p class="jivan-form__note">We respect your privacy. Your information will never be shared.</p>
                 </form>
             </div>

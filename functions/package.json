@@ -1,0 +1,13 @@
+{
+  "name": "jivan-wellness-functions",
+  "description": "Waitlist API for Jivan Wellness static site",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.1.1"
+  },
+  "private": true
+}
