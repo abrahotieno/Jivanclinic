@@ -42,6 +42,12 @@
   background: var(--jivan-cream);
 }
 
+.jivan-division-logo--precision {
+  background: var(--jivan-primary);
+  padding: 0.75rem;
+  border-radius: 12px;
+}
+
 /* Hero card description */
 .jivan-hero-card__desc {
   color: var(--jivan-muted);
@@ -204,6 +210,9 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+  max-width: 100%;
+  max-height: 100vh;
+  border: none;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.12);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -281,6 +290,16 @@
   text-decoration: none;
 }
 
+/* Anchor + .jivan-page a (0,1,1) beats .jivan-btn--primary alone — keep pill text readable */
+.jivan-page a.jivan-btn--primary,
+.jivan-page a.jivan-btn--primary:hover {
+  color: var(--jivan-white);
+}
+
+.jivan-page a.jivan-btn--ghost {
+  color: var(--jivan-deep);
+}
+
 .jivan-skip {
   position: absolute;
   left: -9999px;
@@ -295,12 +314,39 @@
   top: 1rem;
 }
 
+.jivan-page .jivan-float-call {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--jivan-primary);
+  color: var(--jivan-white);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.jivan-page .jivan-float-call:hover {
+  color: var(--jivan-white);
+}
+
+.jivan-page .jivan-float-call:focus-visible {
+  outline: 2px solid var(--jivan-gold);
+  outline-offset: 3px;
+}
+
 /* Header */
 .jivan-header {
   position: sticky;
   top: 0;
   z-index: 50;
   background: rgba(247, 245, 240, 0.92);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(26, 77, 74, 0.08);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
@@ -478,6 +524,18 @@
   margin-bottom: 1.25rem;
 }
 
+.jivan-trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.jivan-trust-badges .jivan-badge {
+  margin-bottom: 0;
+}
+
 .jivan-hero h1 {
   font-size: clamp(2.25rem, 5vw, 3.35rem);
   margin-bottom: 1rem;
@@ -569,6 +627,33 @@
   margin-top: 0.45rem;
   border-radius: 50%;
   background: var(--jivan-gold);
+}
+
+.jivan-countdown {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.jivan-countdown__lead {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--jivan-gold);
+}
+
+.jivan-countdown__row {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  font-weight: bold;
+}
+
+.jivan-countdown__value {
+  font-size: 1.25rem;
+}
+
+.jivan-countdown__unit {
+  font-size: 0.7rem;
 }
 
 /* Sections */
@@ -979,4 +1064,24 @@
   margin-top: 0.25rem;
   opacity: 0.7;
   font-size: 0.8rem;
+}
+
+.jivan-footer__contact {
+  margin-top: 0.75rem;
+}
+
+.jivan-footer__contact a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+}
+
+.jivan-footer__contact a:hover {
+  color: var(--jivan-white);
+  text-decoration: underline;
+}
+
+.jivan-footer__contact-sep {
+  margin: 0 0.5rem;
+  -webkit-user-select: none;
+  user-select: none;
 }
